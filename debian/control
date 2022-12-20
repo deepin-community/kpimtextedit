@@ -1,0 +1,90 @@
+Source: kpimtextedit
+Section: libs
+Priority: optional
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Norbert Preining <norbert@preining.info>,
+           Sandro Knauß <hefee@debian.org>,
+Build-Depends: breeze-icon-theme,
+               cmake (>= 3.16~),
+               debhelper-compat (= 13),
+               extra-cmake-modules (>= 5.83.0~),
+               libgrantlee5-dev (>= 5.2~),
+               libkf5codecs-dev (>= 5.71.0~),
+               libkf5config-dev (>= 5.83.0~),
+               libkf5configwidgets-dev (>= 5.83.0~),
+               libkf5coreaddons-dev (>= 5.83.0~),
+               libkf5i18n-dev (>= 5.83.0~),
+               libkf5iconthemes-dev (>= 5.83.0~),
+               libkf5kio-dev (>= 5.83.0~),
+               libkf5sonnet-dev (>= 5.83.0~),
+               libkf5syntaxhighlighting-dev (>= 5.83.0~),
+               libkf5textwidgets-dev (>= 5.83.0~),
+               libkf5widgetsaddons-dev (>= 5.83.0~),
+               libkf5xmlgui-dev (>= 5.83.0~),
+               libqt5texttospeech5-dev,
+               openbox,
+               pkg-kde-tools (>> 0.15.15),
+               qtbase5-dev (>= 5.15.0~),
+               qttools5-dev,
+               qttools5-dev-tools,
+               xauth,
+               xvfb,
+Standards-Version: 4.6.0
+Homepage: https://invent.kde.org/pim/kpimtextedit
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/kde/kpimtextedit
+Vcs-Git: https://salsa.debian.org/qt-kde-team/kde/kpimtextedit.git
+Rules-Requires-Root: no
+
+Package: libkf5pimtextedit-data
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: libkf5pimtextedit - arch independent files
+ KPIMTextedit provides a textedit with PIM-specific features. It also provides
+ so-called rich text builders which can convert the formatted text in the text
+ edit to all kinds of markup, like HTML or BBCODE.
+ .
+ This package contains the arch independent files.
+
+Package: libkf5pimtextedit-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends: libkf5pimtextedit5abi2 (= ${binary:Version}),
+         libkf5syntaxhighlighting-dev (>= 5.83.0~),
+         libkf5textwidgets-dev (>= 5.83.0~),
+         ${misc:Depends},
+Description: libkf5pimtextedit - development files
+ KPIMTextedit provides a textedit with PIM-specific features. It also provides
+ so-called rich text builders which can convert the formatted text in the text
+ edit to all kinds of markup, like HTML or BBCODE.
+ .
+ This package contains the development files.
+
+Package: libkf5pimtextedit-plugins
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: library that provides a textedit with PIM-specific features - plugins
+ KPIMTextedit provides a textedit with PIM-specific features. It also provides
+ so-called rich text builders which can convert the formatted text in the text
+ edit to all kinds of markup, like HTML or BBCODE.
+ .
+ This package contains the plugin for Qt Designer.
+
+Package: libkf5pimtextedit5abi2
+X-Debian-ABI: 2
+X-CMake-Target: KF5PimTextEdit
+Architecture: any
+Multi-Arch: same
+Depends: libkf5pimtextedit-data (= ${source:Version}),
+         ${misc:Depends},
+         ${shlibs:Depends},
+Recommends: libkf5pimtextedit-plugins
+Description: library that provides a textedit with PIM-specific features
+ KPIMTextedit provides a textedit with PIM-specific features. It also provides
+ so-called rich text builders which can convert the formatted text in the text
+ edit to all kinds of markup, like HTML or BBCODE.
+ .
+ This package is part of the KDE Development Platform PIM libraries module.
+Provides: ${ABI:VirtualPackage}
