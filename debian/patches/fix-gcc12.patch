@@ -1,0 +1,198 @@
+Description: Fix build error with GCC 12
+ kpimtextedit (21.08.1.1-deepin1) unstable; urgency=medium
+ .
+   * Fix build error with GCC 12
+Author: Clansty <i@gao4.pw>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout https://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: (upstream|backport|vendor|other), (<patch-url>|commit:<commit-id>)
+Bug: <upstream-bugtracker-url>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: (no|not-needed|<patch-forwarded-url>)
+Applied-Upstream: <version>, (<commit-url>|commit:<commid-id>)
+Reviewed-By: <name and email of someone who approved/reviewed the patch>
+Last-Update: 2023-01-05
+
+--- kpimtextedit-21.08.1.1.orig/src/composer-ng/richtextcomposerimages.h
++++ kpimtextedit-21.08.1.1/src/composer-ng/richtextcomposerimages.h
+@@ -96,7 +96,7 @@ public:
+      *
+      * @return a modified HTML code, where the \<img\> tags got replaced
+      */
+-    static Q_REQUIRED_RESULT QByteArray imageNamesToContentIds(const QByteArray &htmlBody, const ImageList &imageList);
++    Q_REQUIRED_RESULT static QByteArray imageNamesToContentIds(const QByteArray &htmlBody, const ImageList &imageList);
+ 
+     Q_REQUIRED_RESULT QSharedPointer<EmbeddedImage> createEmbeddedImage(const QImage &img, const QString &imageName) const;
+ 
+--- kpimtextedit-21.08.1.1.orig/src/grantleebuilder/abstractmarkupbuilder.h
++++ kpimtextedit-21.08.1.1/src/grantleebuilder/abstractmarkupbuilder.h
+@@ -247,7 +247,7 @@ public:
+ 
+     @return The fully marked up text.
+   */
+-    virtual Q_REQUIRED_RESULT QString getResult() = 0;
++    Q_REQUIRED_RESULT virtual QString getResult() = 0;
+ 
+     virtual void addSingleBreakLine() = 0;
+ };
+--- kpimtextedit-21.08.1.1.orig/src/grantleebuilder/markupdirector.h
++++ kpimtextedit-21.08.1.1/src/grantleebuilder/markupdirector.h
+@@ -96,7 +96,7 @@ public:
+     Directs the builder to create output for the single @p frame. If calling
+     this method directly, an invalid QTextFrame::iterator may be used.
+   */
+-    virtual Q_REQUIRED_RESULT QTextFrame::iterator processFrame(QTextFrame::iterator it, QTextFrame *frame);
++    Q_REQUIRED_RESULT virtual QTextFrame::iterator processFrame(QTextFrame::iterator it, QTextFrame *frame);
+ 
+     /**
+     Directs the builder to create output for the single @p block. If calling
+@@ -105,7 +105,7 @@ public:
+     This method does not process the contents of the @p block, but uses the
+     @ref processBlockContents method to do so.
+   */
+-    virtual Q_REQUIRED_RESULT QTextFrame::iterator processBlock(QTextFrame::iterator it, const QTextBlock &block);
++    Q_REQUIRED_RESULT virtual QTextFrame::iterator processBlock(QTextFrame::iterator it, const QTextBlock &block);
+ 
+     /**
+     Directs the builder to create output for the single @p textObject. If
+@@ -113,7 +113,7 @@ public:
+ 
+     The block @p block is the container of the @p textObject.
+   */
+-    virtual Q_REQUIRED_RESULT QTextFrame::iterator processObject(QTextFrame::iterator it, const QTextBlock &block, QTextObject *textObject);
++    Q_REQUIRED_RESULT virtual QTextFrame::iterator processObject(QTextFrame::iterator it, const QTextBlock &block, QTextObject *textObject);
+ 
+     /**
+     Directs the builder to create output for the single @p textBlockGroup. If
+@@ -121,7 +121,7 @@ public:
+ 
+     The block @p block is the first block in the @p textBlockGroup.
+   */
+-    virtual Q_REQUIRED_RESULT QPair<QTextFrame::iterator, QTextBlock>
++    Q_REQUIRED_RESULT virtual QPair<QTextFrame::iterator, QTextBlock>
+     processBlockGroup(const QTextFrame::iterator &it, const QTextBlock &block, QTextBlockGroup *textBlockGroup);
+ 
+     /**
+@@ -130,14 +130,14 @@ public:
+ 
+     The block @p block is the first block in the @p textList.
+   */
+-    virtual Q_REQUIRED_RESULT QPair<QTextFrame::iterator, QTextBlock> processList(QTextFrame::iterator it, const QTextBlock &block, QTextList *textList);
++    Q_REQUIRED_RESULT virtual QPair<QTextFrame::iterator, QTextBlock> processList(QTextFrame::iterator it, const QTextBlock &block, QTextList *textList);
+ 
+     /**
+     Directs the builder to create output for the contents of the single @p
+     block. If calling this method directly, an invalid QTextFrame::iterator
+     may be used.
+   */
+-    virtual Q_REQUIRED_RESULT QTextFrame::iterator processBlockContents(QTextFrame::iterator it, const QTextBlock &block);
++    Q_REQUIRED_RESULT virtual QTextFrame::iterator processBlockContents(QTextFrame::iterator it, const QTextBlock &block);
+ 
+     /**
+     Hook for instructing the builder to create output for the @p fragemnt with
+@@ -150,7 +150,7 @@ public:
+     fragment. If calling this method directly, an invalid QTextBlock::iterator
+     may be used. @p doc is the document the fragment is in.
+   */
+-    virtual Q_REQUIRED_RESULT QTextBlock::iterator processFragment(QTextBlock::iterator it, const QTextFragment &fragment, QTextDocument const *doc);
++    Q_REQUIRED_RESULT virtual QTextBlock::iterator processFragment(QTextBlock::iterator it, const QTextFragment &fragment, QTextDocument const *doc);
+ 
+     /**
+     Directs the builder to create output for the contents of the single @p
+@@ -160,7 +160,7 @@ public:
+     If calling this method directly, an invalid QTextBlock::iterator may be
+     used.
+   */
+-    virtual Q_REQUIRED_RESULT QTextBlock::iterator processCharTextObject(QTextBlock::iterator it, const QTextFragment &fragment, QTextObject *textObject);
++    Q_REQUIRED_RESULT virtual QTextBlock::iterator processCharTextObject(QTextBlock::iterator it, const QTextFragment &fragment, QTextObject *textObject);
+ 
+     /**
+     Directs the builder to create output for the image represented by the @p
+@@ -169,7 +169,7 @@ public:
+     If calling this method directly, an invalid QTextBlock::iterator may be
+     used. @p doc is the document the fragment is in.
+   */
+-    virtual Q_REQUIRED_RESULT QTextBlock::iterator processImage(QTextBlock::iterator it, const QTextImageFormat &imageFormat, QTextDocument const *doc);
++    Q_REQUIRED_RESULT virtual QTextBlock::iterator processImage(QTextBlock::iterator it, const QTextImageFormat &imageFormat, QTextDocument const *doc);
+ 
+     /**
+     Directs the builder to create output for the contents of the single @p
+@@ -178,7 +178,7 @@ public:
+     If calling this method directly, an invalid QTextFrame::iterator may be
+     used.
+   */
+-    virtual Q_REQUIRED_RESULT QTextFrame::iterator processTable(QTextFrame::iterator it, QTextTable *table);
++    Q_REQUIRED_RESULT virtual QTextFrame::iterator processTable(QTextFrame::iterator it, QTextTable *table);
+ 
+     /**
+     Directs the builder to create output for the contents of the single @p
+@@ -224,12 +224,12 @@ protected:
+     /**
+     Returns the tags that should be closed at the position of @p it.
+   */
+-    virtual Q_REQUIRED_RESULT QSet<int> getElementsToClose(const QTextBlock::iterator &it) const;
++    Q_REQUIRED_RESULT virtual QSet<int> getElementsToClose(const QTextBlock::iterator &it) const;
+ 
+     /**
+     Returns the tags that should be opened at the position of @p it.
+   */
+-    virtual Q_REQUIRED_RESULT QList<int> getElementsToOpen(const QTextBlock::iterator &it);
++    Q_REQUIRED_RESULT virtual QList<int> getElementsToOpen(const QTextBlock::iterator &it);
+ 
+     /**
+     Flags for the tags that may be open.
+--- kpimtextedit-21.08.1.1.orig/src/texteditor/commonwidget/texteditfindbarbase.h
++++ kpimtextedit-21.08.1.1/src/texteditor/commonwidget/texteditfindbarbase.h
+@@ -40,10 +40,10 @@ Q_SIGNALS:
+     void hideFindBar();
+ 
+ protected:
+-    virtual Q_REQUIRED_RESULT bool viewIsReadOnly() const = 0;
+-    virtual Q_REQUIRED_RESULT bool documentIsEmpty() const = 0;
+-    virtual Q_REQUIRED_RESULT bool searchInDocument(const QString &text, QTextDocument::FindFlags searchOptions) = 0;
+-    virtual Q_REQUIRED_RESULT bool searchInDocument(const QRegularExpression &regExp, QTextDocument::FindFlags searchOptions) = 0;
++    Q_REQUIRED_RESULT virtual bool viewIsReadOnly() const = 0;
++    Q_REQUIRED_RESULT virtual bool documentIsEmpty() const = 0;
++    Q_REQUIRED_RESULT virtual bool searchInDocument(const QString &text, QTextDocument::FindFlags searchOptions) = 0;
++    Q_REQUIRED_RESULT virtual bool searchInDocument(const QRegularExpression &regExp, QTextDocument::FindFlags searchOptions) = 0;
+     virtual void autoSearchMoveCursor() = 0;
+ 
+     bool event(QEvent *e) override;
+--- kpimtextedit-21.08.1.1.orig/src/texttospeech/abstracttexttospeechconfiginterface.h
++++ kpimtextedit-21.08.1.1/src/texttospeech/abstracttexttospeechconfiginterface.h
+@@ -22,12 +22,12 @@ class KPIMTEXTEDIT_EXPORT AbstractTextTo
+ public:
+     explicit AbstractTextToSpeechConfigInterface(QObject *parent = nullptr);
+     ~AbstractTextToSpeechConfigInterface() override;
+-    virtual Q_REQUIRED_RESULT QVector<QLocale> availableLocales() const;
+-    virtual Q_REQUIRED_RESULT QLocale locale() const;
++    Q_REQUIRED_RESULT virtual QVector<QLocale> availableLocales() const;
++    Q_REQUIRED_RESULT virtual QLocale locale() const;
+     virtual void setLocale(const QLocale &locale);
+ 
+-    virtual Q_REQUIRED_RESULT QStringList availableEngines() const;
+-    virtual Q_REQUIRED_RESULT QStringList availableVoices() const;
++    Q_REQUIRED_RESULT virtual QStringList availableEngines() const;
++    Q_REQUIRED_RESULT virtual QStringList availableVoices() const;
+     virtual void setEngine(const QString &engineName);
+ };
+ }
+--- kpimtextedit-21.08.1.1.orig/src/texttospeech/abstracttexttospeechinterface.h
++++ kpimtextedit-21.08.1.1/src/texttospeech/abstracttexttospeechinterface.h
+@@ -20,9 +20,9 @@ public:
+     explicit AbstractTextToSpeechInterface(QObject *parent = nullptr);
+     ~AbstractTextToSpeechInterface() override;
+ 
+-    virtual Q_REQUIRED_RESULT bool isReady() const;
++    Q_REQUIRED_RESULT virtual bool isReady() const;
+     virtual void say(const QString &text);
+-    virtual Q_REQUIRED_RESULT int volume() const;
++    Q_REQUIRED_RESULT virtual int volume() const;
+     virtual void setVolume(int value);
+     virtual void reloadSettings();
+ };
