@@ -1,3 +1,9 @@
+kpimtextedit (21.08.1.1-deepin1) unstable; urgency=medium
+
+  * Fix build error with GCC 12
+
+ -- Clansty <i@gao4.pw>  Thu, 05 Jan 2023 08:35:47 +0000
+
 kpimtextedit (21.08.1-deepin1) unstable; urgency=medium
 
   * Rebuild
